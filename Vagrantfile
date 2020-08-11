@@ -5,8 +5,6 @@ BOX_IP = "192.168.133.10"
 BOX_CPU_COUNT = "2"
 BOX_RAM_MB = "4096"
 
-PODMAN_PORT = "31887"
-
 Vagrant.configure("2") do |config|
 
   config.vm.box = "fedora/32-cloud-base"

@@ -3,12 +3,6 @@
     name: podman
     state: present
 
-- name: enable ssh by root user
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^PermitRootLogin'
-    line: PermitRootLogin yes
-
 - name: set authorized key from file
   authorized_key:
     user: root
