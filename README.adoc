@@ -1,0 +1,27 @@
+== Vagrantfile and provisioning scripts to setup Fedora host as remote backend for podman-remote.
+
+. Install podman, vagrant (I suggest via https://brew.sh/[Homebrew, window='_blank'])
+. Clone/download from https://github.com/naikoob/vagrant-podhost.git[window='_blank']
+. Bring VM (`vagrant up`)
+. Add alias podman=podman --url ssh://root@192.168.133.10/run/podman/podman.sock
++
+--
+[source, sh]
+----
+$ brew cask install podman vagrant
+$ git clone https://github.com/naikoob/vagrant-podhost.git
+$ cd vagrant-podhost
+$ vagrant up
+$ echo "\nalias podman=podman --url ssh://root@192.168.133.10/run/podman/podman.sock" >> ~/.zshrc 
+----
+--
+. Try it out:
++
+--
+[source, sh]
+----
+$ podman run -d -p 8080:80 nginx
+$ curl http://192.168.133.10:8080/
+----
+--
+
