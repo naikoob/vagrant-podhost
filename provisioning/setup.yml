@@ -1,0 +1,31 @@
+- name: install podman
+  dnf:
+    name: podman
+    state: present
+
+- name: enable ssh by root user
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: PermitRootLogin yes
+
+- name: set authorized key from file
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+- name: copy podman.service for editing
+  copy:
+    src: /lib/systemd/system/podman.service
+    dest: /etc/systemd/system/podman.service
+    remote_src: yes
+
+- name: disable podman system service timeout
+  lineinfile:
+    path: /etc/systemd/system/podman.service
+    regexp: '^ExecStart'
+    line: ExecStart=/usr/bin/podman system service -t 0
+  
+- name: start podman.socket
+  systemd: enabled=yes state=started name=podman.socket daemon_reload=yes
