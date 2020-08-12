@@ -1,18 +1,21 @@
-== Vagrantfile and provisioning scripts to setup Fedora host as remote backend for podman-remote.
+== Vagrantfile and provisioning scripts to setup Fedora host as remote backend for podman-remote (version 2).
 
 . Install podman, vagrant and virtualbox (I suggest via https://brew.sh/[Homebrew, window='_blank'])
+.. If you have an older version of podman installed, upgrade with `brew cask upgrade podman`
 . Clone/download from https://github.com/naikoob/vagrant-podhost.git[window='_blank']
 . Bring VM (`vagrant up`)
-. Add alias podman=podman --url ssh://root@192.168.133.10/run/podman/podman.sock
+. Add alias podman=podman --identity=~/.ssh/id_rsa --url=ssh://root@192.168.133.10/run/podman/podman.sock
 +
 --
 [source, sh]
 ----
 $ brew cask install podman vagrant virtualbox
+$ # if you have older version of podman installed on the mac...
+$ brew cask upgrade podman
 $ git clone https://github.com/naikoob/vagrant-podhost.git
 $ cd vagrant-podhost
 $ vagrant up
-$ echo "\nalias podman=podman --url ssh://root@192.168.133.10/run/podman/podman.sock" >> ~/.zshrc 
+$ echo "alias podman=podman --identity=~/.ssh/id_rsa --url=ssh://root@192.168.133.10/run/podman/podman.sock" >> ~/.zshrc 
 $ source ~/.zshrc
 ----
 --
@@ -21,8 +24,10 @@ $ source ~/.zshrc
 --
 [source, sh]
 ----
-$ podman run -d -p 8080:80 nginx
+$ podman run -d -rm -p 8080:80 nginx
 $ curl http://192.168.133.10:8080/
 ----
 --
+
+Check out my https://naikoob.github.io/blog/2020/07/27/podman2-on-mac.html[blog post, window='_blank'] for more information.
 
