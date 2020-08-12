@@ -15,7 +15,7 @@ $ brew cask upgrade podman
 $ git clone https://github.com/naikoob/vagrant-podhost.git
 $ cd vagrant-podhost
 $ vagrant up
-$ echo "alias podman=podman --identity=~/.ssh/id_rsa --url=ssh://root@192.168.133.10/run/podman/podman.sock" >> ~/.zshrc 
+$ echo "alias podman='podman --identity=~/.ssh/id_rsa --url=ssh://root@192.168.133.10/run/podman/podman.sock'" >> ~/.zshrc 
 $ source ~/.zshrc
 ----
 --
